@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#16b9a5"><title>Reef Rush — a little ocean escape</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="/" aria-label="Reef Rush home"><span class="brand-fish">◖</span> reef club<span class="brand-dot">®</span></a><span class="edition">A LITTLE OCEAN ESCAPE / VOL. 01</span><button class="sound" id="sound" aria-pressed="false">sound off ↗</button></header>
+<main>
+<section class="intro"><div class="eyebrow"><span></span> THE TIDE IS HIGH. SO IS THE SCORE.</div><h1>reef <span>rush.</span><svg class="title-star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0 60 34 92 15 72 44 100 55 66 63 79 95 51 75 27 100 32 67 0 58 32 45 14 17 43 32Z"/></svg></h1><div class="intro-bottom"><p>A tiny fish. A big blue playground.<br>Catch the pearls. Leave the jellyfish.</p><span class="handwritten">just keep swimming <svg viewBox="0 0 100 30"><path d="M3 5Q40 45 90 12M76 9 93 10 87 25"/></svg></span></div></section>
+<section class="arcade" aria-label="Reef Rush game">
+<div class="game-top"><span><i></i> CORAL COVE</span><span>45 SECONDS OF GOOD TIDES</span><button id="pause" aria-label="Pause game">Ⅱ pause</button></div>
+<div class="ocean"><canvas id="ocean" width="1000" height="560" tabindex="0" aria-label="Fish game. Move with arrow keys or WASD. Collect pearls and avoid jellyfish."></canvas>
+<div class="hud"><div><small>PEARL POINTS</small><strong id="score">0000</strong></div><div class="hud-middle"><small>TIME LEFT</small><strong id="time">00:45</strong></div><div class="hud-right"><small>KEEP YOUR HEART</small><strong id="lives">♥ ♥ ♥</strong></div></div>
+<div id="overlay" class="overlay"><div class="pill" id="overlay-label">YOUR DAILY DOSE OF VITAMIN SEA</div><h2 id="overlay-title">Small fish.<br><em>Big adventure.</em></h2><p id="overlay-copy">A pearl hunt in paradise. How many can you catch?</p><button id="play" class="play">let’s dive in <span>↗</span></button><span class="overlay-hint">MOVE WITH ↑ ↓ ← → OR W A S D</span></div>
+<div class="combo" id="combo"></div><span class="sea-label">a very good place to get a little lost.</span>
+</div>
+<div class="game-bottom"><span><b>↗</b> COLLECT PEARLS <i class="pearl-icon"></i></span><span><b>↗</b> DODGE THE JELLIES <i class="jelly-icon">♧</i></span><span><b>↗</b> CHASE YOUR HIGH SCORE</span></div>
+</section>
+<section class="below"><div><span class="outline-star">✳</span><p>less scrolling.<br><em>more shoaling.</em></p></div><div class="note"><span class="note-number">01 / FIELD NOTES</span><p>Five pearls build your multiplier.<br>A jelly sting breaks your streak.<br>Every new tide is a fresh start.</p></div><div class="record"><span>YOUR PERSONAL BEST</span><strong id="best">0000</strong><small>ONE MORE ROUND? ALWAYS.</small></div></section>
+<div class="mobile-controls" aria-label="Touch controls"><button data-dir="up" aria-label="Swim up">↑</button><div><button data-dir="left" aria-label="Swim left">←</button><button data-dir="down" aria-label="Swim down">↓</button><button data-dir="right" aria-label="Swim right">→</button></div></div>
+</main><footer><span>MADE FOR THE LOVE OF THE LITTLE THINGS.</span><span>STAY SALTY, FRIEND. ✳</span></footer><script type="module" src="/game.js"></script></body></html>

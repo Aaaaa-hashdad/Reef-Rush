@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createGame, startGame, togglePause, restartGame, collectPearl, hitJelly, update, WIDTH, HEIGHT, ROUND_SECONDS } from '../src/engine.js';
+const playing = () => { const s = createGame(); startGame(s); s.spawnIn = 100; return s; };
+test('new rounds wait for the player', () => { assert.equal(createGame().status, 'ready'); });
+test('a pearl awards points exactly once', () => { const s = playing(), p = {}; collectPearl(s,p); collectPearl(s,p); assert.equal(s.score,10); assert.equal(s.combo,1); });
+test('overlapping jellyfish cannot drain every heart in one frame', () => { const s = playing(); hitJelly(s); hitJelly(s); hitJelly(s); assert.equal(s.lives,2); assert.equal(s.status,'playing'); });
+test('pause freezes movement, countdown, and hazards', () => { const s = playing(); togglePause(s); const before = structuredClone(s); update(s,{right:true},1); assert.deepEqual(s,before); });
+test('movement has the same speed at 30 and 120 fps', () => { const a = playing(), b = playing(); for(let i=0;i<30;i++) update(a,{right:true},1/30); for(let i=0;i<120;i++) update(b,{right:true},1/120); assert.ok(Math.abs(a.player.x-b.player.x)<1e-8); });
+test('diagonal movement is no faster than horizontal movement', () => { const a = playing(),b=playing(); update(a,{right:true},.1); update(b,{right:true,down:true},.1); assert.ok(Math.abs(Math.hypot(b.player.x-200,b.player.y-280)-(a.player.x-200))<1e-8); });
+test('the whole fish remains inside all four edges', () => { const s=playing(); update(s,{left:true,up:true},10); assert.equal(s.player.x,s.player.radius); assert.equal(s.player.y,s.player.radius); update(s,{right:true,down:true},10); assert.equal(s.player.x,WIDTH-s.player.radius); assert.equal(s.player.y,HEIGHT-s.player.radius); });
+test('restart clears all previous round data', () => { const s=playing(); s.score=500;s.combo=12;s.bestCombo=12;s.lives=1;s.remaining=3;s.entities=[{id:99}];s.invulnerable=1; restartGame(s); const expected=playing(); expected.spawnIn=0; assert.deepEqual(s,expected); });
+test('a finished game cannot earn more points or take damage', () => { const s=playing();s.status='over';collectPearl(s,{});hitJelly(s); assert.equal(s.score,0);assert.equal(s.lives,3); });
+test('the timer expires at zero and ends the round', () => { const s=playing();update(s,{},ROUND_SECONDS+1);assert.equal(s.remaining,0);assert.equal(s.status,'over'); });
+test('the same seed produces the same encounter', () => { const a=playing(),b=playing();a.spawnIn=b.spawnIn=0;update(a,{},.1);update(b,{},.1);assert.deepEqual(a,b); });
+test('invalid time steps cannot corrupt game state', () => { const s=playing(),before=structuredClone(s);for(const dt of [NaN,Infinity,-1,0]) update(s,{},dt);assert.deepEqual(s,before); });
